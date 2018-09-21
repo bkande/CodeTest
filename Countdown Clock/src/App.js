@@ -4,80 +4,24 @@ import './App.css';
 
 
 class App extends Component {
-
-  state = {
-    toggle: true
-  }
-
-  constructor(props) {
-    super(props);
-    console.log("Constructor");
-  }
-
-  // before component renders, have access to this.props
-  componentWillMount() {
-    console.log("Will mount");
-  }
-
   render() {
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <Welcome text="Welcome to React App" toggle={this.state.toggle} />
+          <h2 className="App-title">Countdown Clock</h2>
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-        {this.state.toggle &&
-          <p>This should show and hide</p>
-        }
-        <button onClick = {this.toggle}>Show / Hide</button>
-        <Example />
-      </div>
-    );
-  }
-
-  componentDidMount() {
-    console.log('mounted');
-  }
-
-  toggle = () => {
-    this.setState({toggle: !this.state.toggle})
-  }
-
-}
-
-class Welcome extends Component {
-  render() {
-    const {text, toggle} = this.props;
-    console.log(toggle);
-    return (
-      <div>
-      <h1 className="App-title">{text}</h1>
+        
+        <CountdownClock />
       </div>
     );
   }
 }
 
-class CountdownClock extends Component {
-  constructor(props){
+class CountdownClock extends React.Component {
+  constructor(props) {
     super(props);
-    this.state = {
-      time: 0,
-      isOn: false,
-      start: 0
-    }
-
-    this.startTimer = this.startTimer.bind(this)
-  }
-}
-
-
-class Example extends React.Component {
-  constructor() {
-    super();
-    this.state = { time: {}, seconds: 5 };
+    this.state = { time: {}, seconds: 3600 };
     this.timer = 0;
     this.startTimer = this.startTimer.bind(this);
     this.countDown = this.countDown.bind(this);
@@ -106,7 +50,7 @@ class Example extends React.Component {
   }
 
   startTimer() {
-    if (this.timer == 0) {
+    if (this.timer === 0) {
       this.timer = setInterval(this.countDown, 1000);
     }
   }
@@ -120,21 +64,21 @@ class Example extends React.Component {
     });
     
     // Check if we're at zero.
-    if (seconds == 0) { 
+    if (seconds === 0) { 
       clearInterval(this.timer);
     }
   }
 
   render() {
     return(
-      <div>
-        <button onClick={this.startTimer}>Start</button>
-        m: {this.state.time.m} s: {this.state.time.s}
+      <div className="mt-5">
+          <p className="display-4">{this.state.time.h} : {this.state.time.m} : {this.state.time.s}</p>
+        <button className="btn btn-lg btn-primary" type="button" onClick={this.startTimer}>Start Countdown</button>
+        
       </div>
     );
   }
 }
-
 
 
 export default App;
